@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Frontend Service (React App)
+  frontend:
+    build:
+      context: ./my-react-app
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8081
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    stdin_open: true
+    tty: true
+
+  # Backend Service (Spring Boot)
+  backend:
+    build:
+      context: ./TaskManager
+      dockerfile: Dockerfile
+    container_name: spring-backend
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://MysqlContainer:3306/Task_manager1
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=12385678
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - database
+    networks:
+      - app-network
+    restart: on-failure
+
+  # Database Service (MySQL)
+  database:
+    image: mysql:8.0
+    container_name: MysqlContainer
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=12385678
+      - MYSQL_DATABASE=Task_manager1
+      - MYSQL_USER=taskuser
+      - MYSQL_PASSWORD=12385678
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local

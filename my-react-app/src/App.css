@@ -1,0 +1,62 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+
+
+    gap: 30px;
+    justify-content: center;
+
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 20px 10px 15px 10px;
+    width: 280px; /*300px;*/
+    height: 80px;
+    cursor: default;
+}
+
+.icon {
+    margin-right: 10px;
+    /* align-items: center; */
+}
+
+span {
+
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    position:relative;
+    top:-20px;
+
+}
+
+ .class1
+ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .class2
+ {
+    position:relative;
+    top:-7px;
+    right:10px;
+    cursor:pointer;
+    width:80px;
+    height:25px;
+    background-color:rgb(171, 164, 164);
+    border: 0.1px solid black;
+    border-radius:3px;
+
+ }
+.class2:hover
+{
+    background-color: rgb(30,144,255); /*dodgerblue; */
+}
+
